@@ -16,7 +16,7 @@ Example 2:
 
 Input: nums = [1, 2, 3, 4]
 Output: false
-
+vi
 
 TimeO(n)SpaceO(n)
  */
