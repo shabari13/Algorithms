@@ -1,5 +1,59 @@
 package blind75.string;
+/*
+ * 
+ * Given a string s, return the longest palindromic substring in s.
 
+ 
+
+Example 1:
+
+Input: s = "babad"
+Output: "bab"
+Explanation: "aba" is also a valid answer.
+Example 2:
+
+Input: s = "cbbd"
+Output: "bb"
+ 
+
+Constraints:
+
+1 <= s.length <= 1000
+s consist of only digits and English letters.
+Complexity Analysis
+Time Complexity: O(n²)
+
+We visit each character once: O(n)
+For each character, we might expand up to n times: O(n)
+Total: O(n) × O(n) = O(n²)
+
+Space Complexity: O(1)
+
+We only use a few variables (start, end, left, right)
+No extra arrays or data structures needed!
+
+
+Think of it like dropping a pebble in water and watching ripples spread out:
+
+Pick a center point (like the pebble drop)
+Expand outwards (like ripples) checking if letters match on both sides
+Keep expanding as long as both sides match
+Stop when they don't match or you reach the edge
+
+Step-by-Step Walkthrough with "babad"
+Let me show you exactly what happens:
+Initial Setup:
+
+String: "babad"
+start = 0, end = 0
+
+Iteration 1: i = 0 (character 'b')
+
+Check odd-length palindrome centered at 'b' (index 0):
+
+left = 0, right = 0
+
+ */
 public class LongestPalindromicSubstring {
 	
 	
