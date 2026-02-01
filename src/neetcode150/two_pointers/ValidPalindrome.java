@@ -1,4 +1,4 @@
-package neetcode150.arrays_and_hashing;
+package neetcode150.two_pointers;
 /*
  * 
  * Given a string s, return true if it is a palindrome, otherwise return false.
