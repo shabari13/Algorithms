@@ -22,6 +22,7 @@ Constraints:
 
 1 <= k <= nums.length <= 10000
 -1000 <= nums[i] <= 1000
+The solution uses a **Min Heap** (priority queue) of size K to efficiently find the Kth largest element. The key insight is that if we maintain a heap containing the K largest elements we've seen so far, the smallest element in that heap will be exactly the Kth largest element overall. We iterate through the array, and whenever we find an element larger than the smallest in our heap, we remove the smallest and add the new element. This ensures our heap always contains the K largest elements, and the root (minimum) of this heap is our answer.
 
  */
 public class KthLargestElementInArray {
