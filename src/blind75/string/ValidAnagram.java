@@ -41,7 +41,7 @@ So it's O(1) - constant space!
 public class ValidAnagram {
 	public boolean isAnagram(String s, String t) {
 		
-		int[] count = new int[26];
+		int[] count = new int[256];
 		
 		if(s.length() != t.length()) {
 			
@@ -49,11 +49,11 @@ public class ValidAnagram {
 		}
 		
 		for(int i = 0 ; i < s.length(); i++) {
-			count[s.charAt(i) - 'a']++;
-			count[t.charAt(i) - 'a']--;
+			count[s.charAt(i)]++;
+			count[t.charAt(i)]--;
 			
 		}
-		for(int i = 0 ; i < 26; i++) {
+		for(int i = 0 ; i < 256; i++) {
 			if(count[i] != 0) {
 				return false;
 			}
@@ -79,8 +79,8 @@ public class ValidAnagram {
 	        System.out.println();
 	        
 	        // Test Case 3
-	        String s3 = "listen";
-	        String t3 = "silent";
+	        String s3 = "list!en";
+	        String t3 = "silen!t";
 	        System.out.println("Input: s = \"" + s3 + "\", t = \"" + t3 + "\"");
 	        System.out.println("Output: " + solution.isAnagram(s3, t3));
 	        System.out.println();
