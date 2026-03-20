@@ -1,9 +1,15 @@
-package neetcode150.linked_list;
+package neetcode250.linked_list;
 
 import java.util.HashMap;
 import java.util.Map;
+
 /*
- * Implement the Least Recently Used (LRU) cache class LRUCache. The class should support the following operations
+ * LRU Cache
+Medium
+Topics
+Company Tags
+Hints
+Implement the Least Recently Used (LRU) cache class LRUCache. The class should support the following operations
 
 LRUCache(int capacity) Initialize the LRU cache of size capacity.
 int get(int key) Return the value corresponding to the key if the key exists, otherwise return -1.
@@ -38,81 +44,78 @@ Constraints:
 1 <= capacity <= 100
 0 <= key <= 1000
 0 <= value <= 1000
- * Time Complexity
+The Idea Behind the Solution
+An LRU (Least Recently Used) cache is a data structure that holds a limited number of items and automatically evicts the least recently used one when it's full. To do this efficiently in O(1) time for both get and put, we combine two data structures: a HashMap (for instant key lookups) and a Doubly Linked List (to track usage order — the most recently used item stays at the front, and the least recently used item stays at the tail, ready to be kicked out).
 
-get(key): O(1) - Constant time
-
-HashMap lookup: O(1)
-Remove and add to head: O(1)
-
-
-put(key, value): O(1) - Constant time
-
-HashMap lookup: O(1)
-Remove node: O(1)
-Add to head: O(1)
-Remove LRU: O(1)
+Like You're 5 Years Old 🧒
+Imagine you have a small toy shelf that can only hold 3 toys. Every time you play with a toy, you put it at the front of the shelf (most loved). When the shelf is full and you get a new toy, you throw away the toy at the very back (the one you haven't touched in the longest time) to make room. The HashMap is like a label on each toy so you can find any toy instantly without searching the whole shelf.
+Time & Space Complexity
+get(key) — O(1). HashMap lookup is O(1); removeNode and insertAfterHead each touch exactly 4 pointers, which is O(1).
+put(key, value) — O(1). HashMap insert/delete is amortized O(1); all DLL pointer rewiring is constant work regardless of cache size.
+Space — O(capacity). The HashMap and the DLL each hold at most capacity real nodes. The two dummy sentinel nodes are constant overhead.
+ *
  */
+
 public class LRUCache {
 	class Node {
-		int key;
-		int value;
-		Node next;Node prev;
-		public Node(int key, int value) {
+		int key; int val;
+		Node next; Node prev;
+		public Node(int key, int val) {
 			this.key = key;
-			this.value = value;
+			this.val = val;
 		}
 	}
-	private Map<Integer, Node> cache;
-	private int capacity;
-	private Node head;
-	private Node tail;
+	int capacity;
+	Map<Integer, Node> map;
+	Node head; Node tail;
 	public LRUCache(int capacity) {
 		this.capacity = capacity;
-		this.cache  = new HashMap<>();
-		this.head = new Node(0, 0);
+		map = new HashMap<>();
+		this.head = new Node(0,0);
 		this.tail = new Node(0,0);
 		head.next = tail;
 		tail.prev = head;
 	}
+	
 	public int get(int key) {
-		if(!cache.containsKey(key))
+		if(!map.containsKey(key))
 			return -1;
-		Node node = cache.get(key);
+		Node node = map.get(key);
 		removeNode(node);
 		moveToFront(node);
-		return node.value;
+		return node.val;
 	}
-	public void put(int key, int value) {
-		if(cache.containsKey(key)) {
-			Node node = cache.get(key);
-			removeNode(node);
+	
+	public void put(int key, int val) {
+		if(map.containsKey(key)) {
+			Node node = map.get(key);
+			node.val = val;
 			moveToFront(node);
-			node.value = value;
+			removeNode(node);
 		} else {
-			Node newNode = new Node(key, value);
-			
-			if(cache.size() > capacity) {
+			Node newNode = new Node(key, val);
+			map.put(key, newNode);
+			if(map.size() > capacity) {
 				Node lru = tail.prev;
 				removeNode(lru);
-				cache.remove(lru.key);
-			} 
+				map.remove(lru.key);
+			}
 			moveToFront(newNode);
-			cache.put(key, newNode);
 		}
 	}
+	
 	public void removeNode(Node node) {
 		node.prev.next = node.next;
 		node.next.prev = node.prev;
 	}
 	public void moveToFront(Node node) {
-		node.next = head.next; 
-		node.prev = head;
+		node.next = head.next;
 		head.next.prev = node;
+		node.prev = head;
 		head.next = node;
-		
 	}
 	
+
 	  public static void main(String[] args) {
 	        System.out.println("=== Test Case 1: Basic Operations ===");
 	        LRUCache cache1 = new LRUCache(2);
