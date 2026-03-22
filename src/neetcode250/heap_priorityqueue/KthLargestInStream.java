@@ -42,10 +42,10 @@ Space O(k) The heap never holds more than k elements
  *
  *
  */
-public class KthLargest {
+public class KthLargestInStream {
 	int k;
 	PriorityQueue<Integer> minHeap ;
-	public KthLargest(int k, int[] nums) {
+	public KthLargestInStream(int k, int[] nums) {
 		this.k = k;
 		this.minHeap = new PriorityQueue<>();
 		for(int num : nums) {
@@ -71,7 +71,7 @@ public class KthLargest {
 	        System.out.println("]");
 	        System.out.println("──────────────────────────────────────────");
 
-	        KthLargest obj = new KthLargest(k, initial);
+	        KthLargestInStream obj = new KthLargestInStream(k, initial);
 
 	        System.out.printf("%-10s %-20s %-15s%n",
 	                          "add(val)", "Heap after add()", "kth Largest");

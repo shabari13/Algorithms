@@ -97,6 +97,7 @@ public class TaskScheduler {
 			for(int i = 0; i <=n; i++) {
 				if(!pq.isEmpty()) {
 					int freq = pq.poll();
+					cycleTaskCount++;
 					freq--;
 					if(freq > 0)
 						temp.add(freq);
@@ -116,7 +117,4 @@ public class TaskScheduler {
 		}
 		
 
-	
-	
-
-}
+	}
