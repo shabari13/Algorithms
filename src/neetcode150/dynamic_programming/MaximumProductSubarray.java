@@ -26,6 +26,15 @@ Constraints:
 1 <= nums.length <= 1000
 -10 <= nums[i] <= 10
 
+The key insight is that we can't just track the maximum product ending at each position — we must also track the minimum.
+ Why? Because a very negative number (like -100) multiplied by the current minimum (also very negative) can suddenly become the new maximum. 
+ We carry both curMax and curMin forward at every step, and at each new element we consider three fresh candidates: start over with just this element,
+  extend the old max, or extend the old min. The global answer is updated whenever curMax beats it.
+Imagine you're collecting magic coins. Most coins add to your score, but some are "cursed" (negative). Two cursed coins cancel out and become a treasure! 
+So as you walk along the row of coins, you keep two piggy banks: one for your best collection so far, and one for your worst. Every time you pick up a new coin, 
+you try all three options — put it alone in a new bank, add it to the best bank, or add it to the worst bank (because worst × cursed = best!). You always remember 
+the highest score you've ever seen.
+
 Time Complexity
 
 We go through array once.

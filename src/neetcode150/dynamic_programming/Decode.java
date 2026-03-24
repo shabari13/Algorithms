@@ -58,7 +58,7 @@ public class Decode {
 		int n = s.length();
 		int[] dp = new int[n + 1];
 		dp[0] = 1;
-		dp[1] = 1;
+		dp[1] = s.charAt(0) == '0' ? 0 : 1; // single char: valid only if not '0'
 		for(int i = 2; i <= n; i++) {
 			int oneDigit = Integer.parseInt(s.substring(i-1, i));
 			if(oneDigit > 0 && oneDigit <= 9) {

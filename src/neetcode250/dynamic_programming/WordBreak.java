@@ -1,9 +1,11 @@
-package neetcode150.dynamic_programming;
+package neetcode250.dynamic_programming;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+
 
 /*
  * Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of dictionary words.
@@ -35,22 +37,11 @@ Constraints:
 1 <= wordDict.length <= 100
 1 <= wordDict[i].length <= 20
 s and wordDict[i] consist of only lowercase English letters.
-Time Complexity: O(n² × m) where n = length of string, m = average word length
 
-Outer loop: n iterations
-Inner loop: up to n iterations
-substring() operation: O(m)
-Set lookup: O(m) for string comparison
-Overall: O(n² × m)
-
-Optimized version would be O(n²) if we use more efficient substring checking
-Space Complexity: O(n + k) where k = total characters in dictionary
-
-DP array: O(n)
-HashSet: O(k)
-Overall: O(n + k)
+Time — O(n²). There are two nested loops, each running up to n iterations, where n is the string length. Each iteration does an O(k) substring operation (where k ≤ n) and an O(k) hash lookup, which in practice is dominated by the outer O(n²) loop count.
+Space — O(n). The dp array has n+1 booleans. The HashSet takes O(total characters in all dictionary words), which is generally treated as O(m) for dictionary size m — separate from n. So the dominant space cost relative to the input string is O(n).
  */
-public class WordBreak{
+public class WordBreak {
 	 /**
      * WORD BREAK — Dynamic Programming Solution
      *
@@ -66,12 +57,12 @@ public class WordBreak{
      *
      * Answer: dp[n]
      */
-	public boolean wordBreak(String s, List<String> wordDict) {
+	public  boolean wordBreak(String s, List<String> wordDict) {
 		Set<String> set = new HashSet<>(wordDict);
 		boolean[] dp = new boolean[s.length() + 1];
 		dp[0] = true;
-		for(int i = 1; i<= s.length(); i++) {
-			for(int j =0; j<i; j++) {
+		for(int i = 1; i <= s.length(); i++) {
+			for(int j = 0; j < i; j++) {
 				if(dp[j] && set.contains(s.substring(j, i))) {
 					dp[i] = true;
 				}
@@ -102,12 +93,7 @@ public class WordBreak{
 	        System.out.println("Input: s = \"" + s3 + "\", wordDict = " + wordDict3);
 	        System.out.println("Output: " + solution.wordBreak(s3, wordDict3));
 	        System.out.println();
-	        /*
-	         * Test 4 ("cars", dict = ["car", "ca", "rs"]) — the stated answer of true is also correct ✅, but it's worth understanding why, because it's a tricky one that trips people up.
-"cars" cannot be split using "car" alone (leftover "s" isn't in the dict). However, the valid split is "ca" + "rs", which both exist in the dictionary. The dp trace confirms this:
-iPrefixKey checkdp[i]1"c"no matchfalse2"ca"dp[0]=T + "ca" ✓true3"car"dp[0]=T + "car" ✓true4"cars"dp[2]=T + "rs" ✓true ✅
-So the answer true is correct — the valid segmentation is "ca" + "rs". The key insight this test demonstrates is that multiple valid paths exist ("car" leads to a dead end, but "ca" + "rs" succeeds), and the DP naturally finds the working one by trying all split points.
-	         */
+	        
 	        // Test case 4
 	        String s4 = "cars";
 	        List<String> wordDict4 = Arrays.asList("car", "ca", "rs");
